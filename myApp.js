@@ -6,42 +6,49 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 
 let personSchema = new mongoose.Schema({
-  name : {
-    type: String,
-    required: true},
-  email : {
-    type: String,
-    unique: true
-  },
+  name : String,
   age :  Number,
   favoriteFoods : [String]
 })
 
+var Person = mongoose.model("Person",personSchema);
 
-let Person = mongoose.model("Person",personSchema);
+
 
 const createAndSavePerson = (done) => {
-  var janeFonda = new Person({name: "Jane Fonda", email: "wisemrmusa@gmail.com", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
+  var person = new Person({name: "Jane Fonda", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
 
-  janeFonda.save(function(err, data) {
-    if (err) return console.error(err);
-    done(null, data)
+  person.save();
+  // person.save(function(err, data) {
+  //   if (err) return console.error(err);
+  //   done(null, data)
+  // });
+};
+
+
+var arrayOfPeople = [
+  {name: "Frankie", age: 74, favoriteFoods: ["Del Taco"]},
+  {name: "Sol", age: 76, favoriteFoods: ["roast chicken"]},
+  {name: "Robert", age: 78, favoriteFoods: ["wine"]}
+];
+
+
+var createManyPeople = function(arrayOfPeople, done) {
+  Person.create(arrayOfPeople, function (err, people) {
+    if (err) return console.log(err);
+    done(null, people);
   });
 };
 
-const createManyPeople = (arrayOfPeople, done) => {
-
-  var arrayOfPeople = [
-    {name: "Jane Fonda", email: "wisemrmsa@gmail.com", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]},
-    {name: "Jane Fonda", email: "wismrmusa@gmail.com", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]}
-  ]
-  Person.create(arrayOfPeople,function(err,people){
-    if(err){
-      console.log(err);
-    };
-  });
-  done(null, data);
-};
+// const createManyPeople = (arrayOfPeople, done) => {
+//   Person.create(arrayOfPeople);
+//   // Person.create(arrayOfPeople,function(err,data){
+//   //   if(err){
+//   //     console.log(err);
+//   //   };
+//   // });
+//   // done(null, data);
+// };
 
 const findPeopleByName = (personName, done) => {
   done(null /*, data*/);
