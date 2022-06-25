@@ -19,4 +19,4 @@ _connect() {
   }
 }
 
-module.exports = new Database()
+module = new Database()
