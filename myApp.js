@@ -21,11 +21,26 @@ let personSchema = new mongoose.Schema({
 let Person = mongoose.model("Person",personSchema);
 
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  var janeFonda = new Person({name: "Jane Fonda", email: "wisemrmusa@gmail.com", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
+
+  janeFonda.save(function(err, data) {
+    if (err) return console.error(err);
+    done(null, data)
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+
+  var arrayOfPeople = [
+    {name: "Jane Fonda", email: "wisemrmsa@gmail.com", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]},
+    {name: "Jane Fonda", email: "wismrmusa@gmail.com", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]}
+  ]
+  Person.create(arrayOfPeople,function(err,people){
+    if(err){
+      console.log(err);
+    };
+  });
+  done(null, data);
 };
 
 const findPeopleByName = (personName, done) => {
