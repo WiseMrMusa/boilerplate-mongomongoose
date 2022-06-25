@@ -19,4 +19,4 @@ _connect() {
   }
 }
 
-module = new Database()
+module.exports = new Databaser()
